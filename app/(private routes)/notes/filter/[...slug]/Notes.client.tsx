@@ -8,10 +8,10 @@ import SearchBox from '@/components/SearchBox/SearchBox';
 import NoteList from '@/components/NoteList/NoteList';
 import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 import Loader from '@/components/Loader/Loader';
-import { fetchNotes } from '@/lib/api';
 import css from './NotePreview.client.module.css'; 
 import { Tag } from '@/types/note';
 import Link from 'next/link';
+import { fetchNotes } from '@/lib/api/clientApi';
 
 interface NotesClientProps {
   tag: Tag | null;

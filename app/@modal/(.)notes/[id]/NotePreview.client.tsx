@@ -1,10 +1,10 @@
 'use client';
 
 import { useQuery } from "@tanstack/react-query";
-import { fetchNoteById } from "@/lib/api";
 import Modal from "@/components/Modal/Modal";
 import { useParams, useRouter } from "next/navigation";
 import NotePreview from "@/components/NotePreview/NotePreview";
+import { fetchNoteById } from "@/lib/api/clientApi";
 
 
 type Props = object;
