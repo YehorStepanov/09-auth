@@ -5,21 +5,17 @@ import { AxiosResponse } from 'axios';
 import { cookies } from 'next/headers';
 
 
-export interface UserResponse{
-  data:User,
-  success: boolean
-}
 export const getMe = async ():Promise<User>=> {
    const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
-  const res = await api.get<UserResponse>('/users/me', {
+  const res = await api.get('/users/me', {
     headers: {
       Cookie: cookieHeader,
     },
   });
 
-  return res.data.data;
+  return res.data;
 };
 
 export interface SessionResponse{
@@ -43,7 +39,11 @@ export interface NoteResponse {
   totalPages: number;
 }
 export async function fetchNotes(page:number, search:string, tag: Tag| null) : Promise<NoteResponse>{
-  const res = await api.get<NoteResponse>("/notes", {
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore.toString();
+  const res = await api.get<NoteResponse>("/notes", {headers: {
+      Cookie: cookieHeader,
+    },
     params:{
         page,
         perPage: 12,
@@ -55,6 +55,10 @@ export async function fetchNotes(page:number, search:string, tag: Tag| null) : P
   return res.data;
 }
 export async function fetchNoteById(id:string) : Promise<Note>{
-  const res = await api.get<Note>(`/notes/${id}`);
+  const cookieStore = await cookies();
+  const cookieHeader = cookieStore.toString();
+  const res = await api.get<Note>(`/notes/${id}`,{headers: {
+      Cookie: cookieHeader,
+    }});
   return res.data;
 }
