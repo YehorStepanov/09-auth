@@ -9,7 +9,7 @@ export interface UserResponse{
   data:User,
   success: boolean
 }
-export const getMe = async ()=> {
+export const getMe = async ():Promise<User>=> {
    const cookieStore = await cookies();
   const cookieHeader = cookieStore.toString();
 
@@ -19,7 +19,7 @@ export const getMe = async ()=> {
     },
   });
 
-  return res.data;
+  return res.data.data;
 };
 
 export interface SessionResponse{
