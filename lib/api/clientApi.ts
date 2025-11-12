@@ -21,9 +21,9 @@ export const logout = async (): Promise<void> => {
 
 export const checkSession = async (): Promise<User | null> => {
   try {
-    const { data: session } = await api.get('/auth/session', { withCredentials: true });
+    const { data: session } = await api.get('/auth/session');
     if (session?.success) {
-      const { data: user } = await api.get('/users/me', { withCredentials: true });
+      const { data: user } = await api.get('/users/me');
       return user;
     }
 

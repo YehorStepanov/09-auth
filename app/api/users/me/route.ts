@@ -9,7 +9,8 @@ import { isAxiosError } from 'axios';
 export async function GET() {
   try {
     const cookieStore = await cookies();
-
+    
+    
     const res = await api.get('/users/me', {
       headers: {
         Cookie: cookieStore.toString(),

@@ -13,7 +13,6 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     const verifySession = async () => {
       try {
         const data = await checkSession();
-        console.log(data);
         
         if (data?.email) {
           setUser(data);

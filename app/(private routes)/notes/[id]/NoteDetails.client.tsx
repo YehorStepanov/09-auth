@@ -1,26 +1,29 @@
 'use client';
 
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import NotePreview from '@/components/NotePreview/NotePreview';
-import router from 'next/router';
-import Loader from '@/components/Loader/Loader';
 import { fetchNoteById } from '@/lib/api/clientApi';
+import NotePreview from '@/components/NotePreview/NotePreview';
+import Loader from '@/components/Loader/Loader';
+import ErrorMessage from '@/components/ErrorMessage/ErrorMessage';
 
 export default function NoteDetails() {
   const { id } = useParams<{ id: string }>();
+  const router = useRouter();
 
-  const {data: note, isLoading,error} = useQuery({
+  const { data: note, isLoading, isError } = useQuery({
     queryKey: ['note', id],
     queryFn: () => fetchNoteById(id),
     refetchOnMount: false,
   });
-  
-  if (error || !note) return <p>Error loading note.</p>;
+
+  if (isLoading) return <Loader />;
+  if (isError) return <ErrorMessage />;
+  if (!note) return <ErrorMessage />;
+
   return (
     <>
       <button onClick={() => router.back()}>Close</button>
-      {isLoading && Loader}
       <NotePreview note={note} />
     </>
   );

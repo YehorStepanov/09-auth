@@ -1,19 +1,29 @@
-'use client';
-
-import Link from 'next/link';
+import type { Metadata } from 'next';
 import Image from 'next/image';
+import Link from 'next/link';
 import css from './page.module.css';
-import { useAuthStore } from '@/lib/store/authStore';
+import { getMe } from '@/lib/api/serverApi';
 
-export default function ProfilePage() {
-  const { user } = useAuthStore();
-  if (!user) {
-    return (
-      <main className={css.mainContent}>
-        <p>Loading profile...</p>
-      </main>
-    );
-  }
+export const metadata: Metadata = {
+  title: 'Profile | NoteHub',
+  description: 'Your profile page with account details.',
+  openGraph: {
+    title: 'Profile | NoteHub',
+    description: 'Your profile page with account details.',
+    url: 'https://notehub.example.com/profile',
+    images: [
+      {
+        url: 'https://ac.goit.global/fullstack/react/notehub-og-meta.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Profile OG',
+      },
+    ],
+  },
+};
+
+export default async function ProfilePage() {
+  const user = await getMe();
 
   return (
     <main className={css.mainContent}>
@@ -36,12 +46,8 @@ export default function ProfilePage() {
         </div>
 
         <div className={css.profileInfo}>
-          <p>
-            <strong>Username:</strong> {user.username}
-          </p>
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
+          <p><strong>Username:</strong> {user.username}</p>
+          <p><strong>Email:</strong> {user.email}</p>
         </div>
       </div>
     </main>
